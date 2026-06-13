@@ -1,0 +1,13 @@
+### Example user template
+
+# IntelliJ project files
+.idea
+
+# General
+.DS_Store
+
+.env
+
+node_modules
+
+
