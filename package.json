@@ -6,12 +6,17 @@
   "author": "Gromakovskiy Konstantin",
   "type": "module",
   "main": "index.js",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "bun index.ts",
     "dev": "bun --watch index.ts",
     "lint": "eslint . --ext .js,.ts",
+    "lint:staged": "npx lint-staged",
     "lint:fix": "eslint . --ext .js,.ts --fix",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -33,6 +38,7 @@
     "drizzle-orm": "^0.45.2",
     "eslint": "^10.5.0",
     "grammy": "^1.43.0",
+    "lint-staged": "^17.0.7",
     "pg": "^8.21.0"
   }
 }
