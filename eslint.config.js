@@ -4,13 +4,15 @@ import stylistic from '@stylistic/eslint-plugin'
 import globals from 'globals'
 
 export default tseslint.config(
-  js.configs.recommended,
-  stylistic.configs.recommended,
   {
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: {
       globals: {
         ...globals.node,
       },
     },
   },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  stylistic.configs.recommended,
 )
