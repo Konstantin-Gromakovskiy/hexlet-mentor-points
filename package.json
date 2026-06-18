@@ -7,7 +7,7 @@
   "type": "module",
   "main": "index.js",
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --fix"
+    "*.{js,jsx,ts,tsx}": "eslint"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
