@@ -1,26 +1,18 @@
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { usersTable } from './db/schema.js'
-import { eq } from 'drizzle-orm'
 
 const db = drizzle(process.env.DATABASE_URL!)
 
-async function main() {
+async function addFirstUser() {
   const user: typeof usersTable.$inferInsert = {
-    first_name: 'Костя',
+    firstName: 'Костя',
     telegramId: '123456789',
   }
 
   await db.insert(usersTable).values(user)
+}
 
-  const users = await db.select().from(usersTable)
-  console.log('Getting all users from the database: ', users)
-
-  await db
-    .update(usersTable)
-    .set({
-      first_name: 'Вова',
-    })
-    .where(eq(usersTable.telegramId, '123456789'))
-  console.log('User info updated!')
+async function main() {
+  await addFirstUser()
 }
 main()
