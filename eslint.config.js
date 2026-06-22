@@ -15,4 +15,15 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   stylistic.configs.recommended,
+  {
+    rules: {
+      '@stylistic/max-len': ['error', {
+        code: 120,
+        ignoreComments: true,
+        ignoreUrls: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+      }],
+    },
+  },
 )
