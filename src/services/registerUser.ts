@@ -1,8 +1,8 @@
 import { db } from '@/db'
 import { usersTable } from '@/db/schema'
-import type { User } from '@/domains/users'
+import type { CreateUserData } from '@/domains/users'
 
-export const registerUser = async (user: User) => db
+export const registerUser = async (user: CreateUserData) => db
   .insert(usersTable)
   .values(user)
   .onConflictDoUpdate({

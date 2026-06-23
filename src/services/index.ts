@@ -1,2 +1,2 @@
-export { checkUser } from '@/services/checkUser'
+export { findUser } from '@/services/findUser'
 export { registerUser } from '@/services/registerUser'

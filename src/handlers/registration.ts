@@ -2,9 +2,16 @@ import type { Bot } from 'grammy'
 import { isUserRole } from '@/domains/users'
 import { roleKeyboard } from '@/keyboards/roleKeyboard'
 import { registerUser } from '@/services'
+import { findUser } from '@/services'
 
 export const registration = (bot: Bot) => {
   bot.command('start', async (ctx) => {
+    const existedUser = await findUser(String(ctx.from?.id))
+    if (existedUser) {
+      await ctx.reply('Вы уже зарегистрированы')
+      return
+    }
+
     await ctx.reply('Выберите роль', { reply_markup: roleKeyboard })
   })
 
