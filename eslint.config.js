@@ -17,12 +17,15 @@ export default tseslint.config(
   stylistic.configs.recommended,
   {
     rules: {
+      '@typescript-eslint/no-unused-vars': ['error', {
+        argsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      }],
       '@stylistic/max-len': ['error', {
         code: 120,
         ignoreComments: true,
-        ignoreUrls: true,
-        ignoreStrings: true,
-        ignoreTemplateLiterals: true,
       }],
     },
   },
