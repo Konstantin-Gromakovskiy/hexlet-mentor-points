@@ -1,7 +1,6 @@
-import { db } from '../db/index.js'
-import { usersTable } from '../db/schema.js'
-
-type User = typeof usersTable.$inferInsert
+import { db } from '@/db'
+import { usersTable } from '@/db/schema'
+import type { User } from '@/domains/users'
 
 export const registerUser = async (user: User) => db
   .insert(usersTable)
@@ -12,5 +11,6 @@ export const registerUser = async (user: User) => db
       firstName: user.firstName,
       username: user.username,
       updatedAt: new Date(),
+      role: user.role,
     },
   })

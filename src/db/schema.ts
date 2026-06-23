@@ -1,6 +1,6 @@
 import { integer, pgTable, varchar, timestamp, pgEnum } from 'drizzle-orm/pg-core'
 
-const userRoleEnum = pgEnum('role', ['tutor', 'admin'])
+export const userRoleEnum = pgEnum('role', ['tutor', 'admin'])
 
 export const usersTable = pgTable('users', {
   id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
