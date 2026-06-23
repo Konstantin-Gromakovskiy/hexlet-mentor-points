@@ -1,6 +1,6 @@
 import { Bot } from 'grammy'
-import { config } from './config.js'
-import { handlers } from './handlers/index.js'
+import { config } from './config'
+import { handlers } from './handlers'
 
 export const createBot = () => {
   const bot = new Bot(config.botToken)
