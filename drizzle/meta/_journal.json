@@ -15,6 +15,13 @@
       "when": 1782201438263,
       "tag": "0001_puzzling_rockslide",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782209147021,
+      "tag": "0002_hot_spiral",
+      "breakpoints": true
     }
   ]
 }
