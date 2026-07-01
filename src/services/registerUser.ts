@@ -1,5 +1,4 @@
-import { db } from '@/db'
-import { usersTable } from '@/db/schema'
+import { usersTable, db } from '@/db'
 import type { CreateUserData } from '@/domains/users'
 
 export const registerUser = async (user: CreateUserData) => db

@@ -1,4 +1,4 @@
-import { userRoleEnum, usersTable } from '@/db/schema'
+import { userRoleEnum, usersTable } from '@/db'
 
 export type User = typeof usersTable.$inferSelect
 export type CreateUserData = typeof usersTable.$inferInsert

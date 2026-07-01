@@ -3,7 +3,7 @@
 ## Структура проекта и модулей
 
 Проект написан на TypeScript и запускается через Bun. 
-Схема PostgreSQL находится в `src/db/schema.ts`; сгенерированные миграции и метаданные Drizzle лежат в `drizzle/`. 
+Схема PostgreSQL находится в `src/db/schemes/users.ts`; сгенерированные миграции и метаданные Drizzle лежат в `drizzle/`. 
 Документация продукта и технического стека хранится в `docs/`. Локальная база описана в `compose.yaml`.
 
 ## Команды сборки, проверки и разработки
@@ -14,7 +14,7 @@
 - `npm run lint` — проверить `.js` и `.ts` файлы ESLint.
 - `npm run lint:fix` — автоматически исправить поддерживаемые ESLint-проблемы.
 - `npm run typecheck` — проверить типы TypeScript без генерации файлов.
-- `npm run db:generate` — сгенерировать миграцию Drizzle из `src/db/schema.ts`.
+- `npm run db:generate` — сгенерировать миграцию Drizzle из `src/db/schemes/users.ts`.
 - `npm run db:migrate` — применить миграции из `drizzle/`.
 - `npm run db:push` — синхронизировать схему напрямую с базой для локальной разработки.
 
@@ -37,4 +37,3 @@
 
 Не коммить `.env` и реальные токены. 
 PostgreSQL для локальной разработки поднимается из `compose.yaml`.
-

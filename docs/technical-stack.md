@@ -50,20 +50,21 @@ src/
   bot.ts
   db/
     index.ts
-    schema.ts
-    migrations/
-    seed.ts
+    schemes/
+      users.ts
   handlers/
+    index.ts
     registration.ts
-    tutor.ts
-    admin.ts
   services/
-    points.ts
-    reward-requests.ts
+    index.ts
+    findUser.ts
+    registerUser.ts
   keyboards/
-tests/
-  unit/
-  integration/
+    roleKeyboard.ts
+  domains/
+    users.ts
+  types/
+    bot.ts
 ```
 
 Назначение основных частей:
