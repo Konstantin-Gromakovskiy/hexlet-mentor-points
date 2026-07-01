@@ -11,6 +11,5 @@ export const registerUser = async (user: CreateUserData) => db
       firstName: user.firstName,
       username: user.username,
       updatedAt: new Date(),
-      role: user.role,
     },
   })
