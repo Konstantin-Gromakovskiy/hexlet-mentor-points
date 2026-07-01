@@ -15,6 +15,13 @@
       "when": 1782201438263,
       "tag": "0001_puzzling_rockslide",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782942593943,
+      "tag": "0002_conscious_sunset_bain",
+      "breakpoints": true
     }
   ]
 }
