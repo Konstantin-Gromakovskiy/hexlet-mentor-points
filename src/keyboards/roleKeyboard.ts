@@ -1,5 +1,6 @@
 import { InlineKeyboard } from 'grammy'
+import type { BotContext } from '@/types/bot'
 
-export const roleKeyboard = new InlineKeyboard()
-  .text('Тьютор', 'registration:role:tutor')
-  .text('Админ', 'registration:role:admin')
+export const roleKeyboard = (ctx: BotContext) => new InlineKeyboard()
+  .text(ctx.t('registration-role-tutor'), 'registration:role:tutor')
+  .text(ctx.t('registration-role-admin'), 'registration:role:admin')

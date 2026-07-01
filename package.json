@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@eslint/js": "^10.0.1",
+    "@grammyjs/i18n": "^1.1.2",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "eslint": "^10.5.0",

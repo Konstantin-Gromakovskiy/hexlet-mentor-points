@@ -1,6 +1,6 @@
-import type { Bot } from 'grammy'
 import { registration } from '@/handlers/registration'
+import type { AppBot } from '@/types/bot'
 
-export const handlers = (bot: Bot) => {
+export const handlers = (bot: AppBot) => {
   registration(bot)
 }
