@@ -2,7 +2,7 @@ import { boolean, integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-co
 
 export const rewardsTable = pgTable('rewards', {
   id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
-  title: varchar('title', { length: 255 }).notNull(),
+  title: varchar('title', { length: 255 }).notNull().unique(),
   description: varchar('description', { length: 255 }),
   price: integer('price').notNull(),
   isActive: boolean('is_active').notNull().default(true),

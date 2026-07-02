@@ -29,6 +29,13 @@
       "when": 1782978870451,
       "tag": "0003_hesitant_chamber",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1782986493842,
+      "tag": "0004_crazy_lucky_pierre",
+      "breakpoints": true
     }
   ]
 }
