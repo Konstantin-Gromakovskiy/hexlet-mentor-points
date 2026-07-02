@@ -1,5 +1,5 @@
 import { usersTable, db } from '@/db'
-import type { CreateUserData } from '@/domains/users'
+import type { CreateUserData } from '@/domains'
 
 export const registerUser = async (user: CreateUserData) => db
   .insert(usersTable)

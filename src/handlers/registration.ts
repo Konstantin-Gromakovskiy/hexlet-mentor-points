@@ -1,4 +1,4 @@
-import { isUserRole } from '@/domains/users'
+import { isUserRole } from '@/domains'
 import { roleKeyboard } from '@/keyboards/roleKeyboard'
 import { registerUser } from '@/services'
 import { findUser } from '@/services'
