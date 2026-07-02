@@ -1,10 +1,10 @@
-import { boolean, integer, pgTable, varchar, timestamp } from 'drizzle-orm/pg-core'
+import { boolean, integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
 
-export const activitiesTable = pgTable('activities', {
+export const rewardsTable = pgTable('rewards', {
   id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   title: varchar('title', { length: 255 }).notNull(),
   description: varchar('description', { length: 255 }),
-  points: integer('points').notNull(),
+  price: integer('price').notNull(),
   isActive: boolean('is_active').notNull().default(true),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
