@@ -1,9 +1,9 @@
 import { isUserRole } from '@/domains'
-import { roleKeyboard } from '@/keyboards/roleKeyboard'
 import { registerUser } from '@/services'
 import { findUser } from '@/services'
 import type { AppBot } from '@/types/bot'
 import { config } from '@/config'
+import { callbackData, roleKeyboard, tutorActions } from '@/keyboards'
 
 const isUserInWorkChat = async (bot: AppBot, userId: number) => {
   const chatMember = await bot.api.getChatMember(Number(config.workChatId), userId)
@@ -37,14 +37,14 @@ export const registration = (bot: AppBot) => {
     const existedUser = await findUser(String(ctx.from?.id))
 
     if (existedUser) {
-      await ctx.reply(ctx.t('registration-already-registered'))
+      await ctx.reply(ctx.t('choose-actions'), { reply_markup: tutorActions(ctx) })
       return
     }
 
     await ctx.reply(ctx.t('registration-choose-role'), { reply_markup: roleKeyboard(ctx) })
   })
 
-  bot.callbackQuery(/^registration:role:(tutor|admin)$/, async (ctx) => {
+  bot.callbackQuery(callbackData.user.rolePattern, async (ctx) => {
     const [_request, role] = ctx.match
     const user = ctx.from
 

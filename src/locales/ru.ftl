@@ -8,3 +8,6 @@ registration-success = Вы зарегистрированы
 registration-failed = Не удалось зарегистрироваться
 access-denied = Доступ к боту разрешен только участникам рабочего чата
 registration-membership-check-failed = Не удалось проверить доступ. Попробуйте позже
+
+choose-actions = Выберите действие
+award-points = Начислить баллы
