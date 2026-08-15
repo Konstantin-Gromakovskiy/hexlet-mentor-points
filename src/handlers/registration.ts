@@ -40,7 +40,7 @@ export const registration = (bot: AppBot, registrationService: RegistrationServi
       await registrationService.createUser({
         telegramId: String(user.id),
         firstName: user.first_name,
-        username: user.username,
+        username: user.username ?? null,
         role,
       })
       await ctx.reply(ctx.t('registration-success'))

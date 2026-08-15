@@ -12,17 +12,10 @@ export class PostgresUserRepository implements UserRepository {
     return user
   }
 
-  async createUser(user: NewUser): Promise<User> {
-    const [createdUser] = await this.db.insert(usersTable).values(user).onConflictDoUpdate({
+  async createUser(user: NewUser): Promise<User | undefined> {
+    const [createdUser] = await this.db.insert(usersTable).values(user).onConflictDoNothing({
       target: usersTable.telegramId,
-      set: {
-        firstName: user.firstName,
-        username: user.username,
-        updatedAt: new Date(),
-      },
     }).returning()
-
-    if (!createdUser) throw new Error('User was not returned after upsert')
 
     return createdUser
   }

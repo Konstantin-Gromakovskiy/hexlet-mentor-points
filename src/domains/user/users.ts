@@ -6,8 +6,8 @@ export type User = {
   role: UserRole
 }
 
-export type UserRole = 'student' | 'tutor'
+export type UserRole = 'admin' | 'tutor'
 export type NewUser = Omit<User, 'id'>
 
 export const isUserRole = (value: string): value is UserRole =>
-  value === 'tutor' || value === 'student'
+  value === 'tutor' || value === 'admin'
