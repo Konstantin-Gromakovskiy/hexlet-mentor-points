@@ -1,5 +1,5 @@
 import type { UserRepository } from '@/repositories/user.repository.interface'
-import type { CreateUserData } from '@/domains'
+import type { NewUser } from '@/domains'
 
 export class RegistrationService {
   constructor(private readonly users: UserRepository) { }
@@ -8,7 +8,7 @@ export class RegistrationService {
     return this.users.findByTelegramId(telegramId)
   }
 
-  createUser(user: CreateUserData) {
+  createUser(user: NewUser) {
     return this.users.createUser(user)
   }
 }

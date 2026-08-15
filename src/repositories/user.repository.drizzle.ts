@@ -1,6 +1,6 @@
 import type { UserRepository } from '@/repositories/user.repository.interface'
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
-import type { CreateUserData, User } from '@/domains'
+import type { NewUser, User } from '@/domains'
 import { usersTable } from '@/db'
 import { eq } from 'drizzle-orm'
 
@@ -12,7 +12,7 @@ export class PostgresUserRepository implements UserRepository {
     return user
   }
 
-  async createUser(user: CreateUserData): Promise<User> {
+  async createUser(user: NewUser): Promise<User> {
     const [createdUser] = await this.db.insert(usersTable).values(user).onConflictDoUpdate({
       target: usersTable.telegramId,
       set: {

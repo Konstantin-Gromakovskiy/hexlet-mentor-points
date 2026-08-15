@@ -1,6 +1,6 @@
-import type { CreateUserData, User } from '@/domains'
+import type { NewUser, User } from '@/domains'
 
 export interface UserRepository {
   findByTelegramId(id: string): Promise<User | undefined>
-  createUser(user: CreateUserData): Promise<User>
+  createUser(user: NewUser): Promise<User>
 }

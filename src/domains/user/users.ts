@@ -1,7 +1,16 @@
-import { userRoleEnum, usersTable } from '@/db'
+export type User = {
+  id: number
+  telegramId: string
+  firstName: string
+  username: string | null
+  role: UserRole
+}
 
-export type User = typeof usersTable.$inferSelect
-export type CreateUserData = typeof usersTable.$inferInsert
-export type UserRole = typeof userRoleEnum.enumValues[number]
+export enum UserRole {
+  Tutor = 'tutor',
+  Admin = 'admin',
+}
+export type NewUser = Omit<User, 'id'>
+
 export const isUserRole = (value: string): value is UserRole =>
-  userRoleEnum.enumValues.includes(value as UserRole)
+  Object.values(UserRole).includes(value as UserRole)
