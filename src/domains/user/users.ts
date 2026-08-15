@@ -6,11 +6,8 @@ export type User = {
   role: UserRole
 }
 
-export enum UserRole {
-  Tutor = 'tutor',
-  Admin = 'admin',
-}
+export type UserRole = 'student' | 'tutor'
 export type NewUser = Omit<User, 'id'>
 
 export const isUserRole = (value: string): value is UserRole =>
-  Object.values(UserRole).includes(value as UserRole)
+  value === 'tutor' || value === 'student'
