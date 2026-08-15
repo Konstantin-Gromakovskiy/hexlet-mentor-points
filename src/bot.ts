@@ -5,7 +5,7 @@ import { I18n } from '@grammyjs/i18n'
 import type { BotContext } from '@/types/bot'
 import { RegistrationService } from '@/services'
 import { db } from '@/db'
-import { PostgresUserRepository } from '@/domains/user/user.repository.drizzle'
+import { PostgresUserRepository } from '@/repositories/user.repository.drizzle'
 
 export const createBot = () => {
   const bot = new Bot<BotContext>(config.botToken)

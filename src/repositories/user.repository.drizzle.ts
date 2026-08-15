@@ -1,4 +1,4 @@
-import type { UserRepository } from '@/domains/user/user.repository.interface'
+import type { UserRepository } from '@/repositories/user.repository.interface'
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
 import type { CreateUserData, User } from '@/domains'
 import { usersTable } from '@/db'

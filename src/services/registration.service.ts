@@ -1,4 +1,4 @@
-import type { UserRepository } from '@/domains/user/user.repository.interface'
+import type { UserRepository } from '@/repositories/user.repository.interface'
 import type { CreateUserData } from '@/domains'
 
 export class RegistrationService {
