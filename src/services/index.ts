@@ -1,2 +1,1 @@
-export { findUser } from '@/services/findUser'
-export { registerUser } from '@/services/registerUser'
+export { RegistrationService } from './registration.service'

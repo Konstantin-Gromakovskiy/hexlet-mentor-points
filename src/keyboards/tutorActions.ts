@@ -4,3 +4,5 @@ import { callbackData } from './callbackData'
 
 export const tutorActions = (ctx: BotContext) => new InlineKeyboard()
   .text(ctx.t('award-points'), callbackData.user.awardPoints)
+  .text(ctx.t('spend-points'), callbackData.user.spendPoints).row()
+  .text(ctx.t('check-balance'), callbackData.user.checkBalance)

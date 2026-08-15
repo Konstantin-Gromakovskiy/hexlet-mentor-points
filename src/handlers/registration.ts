@@ -1,9 +1,8 @@
 import { isUserRole } from '@/domains'
-import { registerUser } from '@/services'
-import { findUser } from '@/services'
 import type { AppBot } from '@/types/bot'
 import { config } from '@/config'
 import { callbackData, roleKeyboard, tutorActions } from '@/keyboards'
+import type { RegistrationService } from '@/services/registration.service'
 
 const isUserInWorkChat = async (bot: AppBot, userId: number) => {
   const chatMember = await bot.api.getChatMember(Number(config.workChatId), userId)
@@ -11,35 +10,17 @@ const isUserInWorkChat = async (bot: AppBot, userId: number) => {
   return chatMember.status !== 'left' && chatMember.status !== 'kicked'
 }
 
-export const registration = (bot: AppBot) => {
+export const registration = (bot: AppBot, registrationService: RegistrationService) => {
   bot.command('start', async (ctx) => {
-    const userId = ctx.from?.id
+    const user = ctx.from
 
-    if (!userId) {
-      await ctx.reply(ctx.t('registration-user-undefined'))
-      return
-    }
+    if (!user) return await ctx.reply(ctx.t('registration-user-undefined'))
+    const isUserInPrivateChat = await isUserInWorkChat(bot, user.id)
+    if (!isUserInPrivateChat) return await ctx.reply(ctx.t('access-denied'))
 
-    try {
-      const isUserInPrivateChat = await isUserInWorkChat(bot, userId)
+    const existedUser = await registrationService.findExistingUser(String(user.id))
 
-      if (!isUserInPrivateChat) {
-        await ctx.reply(ctx.t('access-denied'))
-        return
-      }
-    }
-    catch (e) {
-      await ctx.reply(ctx.t('registration-membership-check-failed'))
-      console.error(e)
-      return
-    }
-
-    const existedUser = await findUser(String(ctx.from?.id))
-
-    if (existedUser) {
-      await ctx.reply(ctx.t('choose-actions'), { reply_markup: tutorActions(ctx) })
-      return
-    }
+    if (existedUser) return await ctx.reply(ctx.t('choose-actions'), { reply_markup: tutorActions(ctx) })
 
     await ctx.reply(ctx.t('registration-choose-role'), { reply_markup: roleKeyboard(ctx) })
   })
@@ -48,24 +29,15 @@ export const registration = (bot: AppBot) => {
     const [_request, role] = ctx.match
     const user = ctx.from
 
-    if (!user) {
-      await ctx.reply(ctx.t('registration-user-undefined'))
-      return
-    }
-    if (!role || !isUserRole(role)) {
-      await ctx.reply(ctx.t('registration-role-undefined'))
-      return
-    }
+    if (!user) return await ctx.reply(ctx.t('registration-user-undefined'))
+    if (!role || !isUserRole(role)) return await ctx.reply(ctx.t('registration-role-undefined'))
 
     try {
       const isUserInPrivateChat = await isUserInWorkChat(bot, user.id)
 
-      if (!isUserInPrivateChat) {
-        await ctx.reply(ctx.t('access-denied'))
-        return
-      }
+      if (!isUserInPrivateChat) return await ctx.reply(ctx.t('access-denied'))
 
-      await registerUser({
+      await registrationService.createUser({
         telegramId: String(user.id),
         firstName: user.first_name,
         username: user.username,

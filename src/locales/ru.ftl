@@ -6,8 +6,14 @@ registration-user-undefined = Не удалось определить поль�
 registration-role-undefined = Не удалось определить роль
 registration-success = Вы зарегистрированы
 registration-failed = Не удалось зарегистрироваться
-access-denied = Доступ к боту разрешен только участникам рабочего чата
 registration-membership-check-failed = Не удалось проверить доступ. Попробуйте позже
 
+# tutor action
 choose-actions = Выберите действие
 award-points = Начислить баллы
+spend-points = Потратить баллы
+check-balance = Посмотреть баланс
+
+
+
+access-denied = Доступ к боту разрешен только участникам рабочего чата
