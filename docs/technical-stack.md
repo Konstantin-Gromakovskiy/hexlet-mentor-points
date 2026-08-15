@@ -51,7 +51,7 @@ src/
   db/
     index.ts
     schemes/
-      users.ts
+      user.ts
   handlers/
     index.ts
     registration.ts
@@ -62,7 +62,7 @@ src/
   keyboards/
     roleKeyboard.ts
   domains/
-    users.ts
+    user.ts
   types/
     bot.ts
 ```
