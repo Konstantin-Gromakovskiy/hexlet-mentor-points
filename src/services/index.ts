@@ -1,1 +1,1 @@
-export { RegistrationService } from './registration.service'
+export { RegistrationService } from './registration/registration.service'

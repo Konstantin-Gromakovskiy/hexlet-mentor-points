@@ -2,7 +2,7 @@ import { isUserRole } from '@/domains'
 import type { AppBot } from '@/types/bot'
 import { config } from '@/config'
 import { callbackData, roleKeyboard, tutorActions } from '@/keyboards'
-import type { RegistrationService } from '@/services/registration.service'
+import type { RegistrationService } from '@/services/registration/registration.service'
 
 const isUserInWorkChat = async (bot: AppBot, userId: number) => {
   const chatMember = await bot.api.getChatMember(Number(config.workChatId), userId)
