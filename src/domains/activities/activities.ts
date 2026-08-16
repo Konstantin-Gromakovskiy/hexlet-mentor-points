@@ -1,4 +1,8 @@
-import { activitiesTable } from '@/db'
+export type Activity = {
+  id: number
+  title: string
+  description: string | null
+  points: number
+}
 
-export type Activity = typeof activitiesTable.$inferSelect
-export type CreateActivityData = typeof activitiesTable.$inferInsert
+export type NewActivity = Omit<Activity, 'id'>
