@@ -6,5 +6,10 @@ export const callbackData = {
     awardPoints: 'user:select-action:award-points',
     spendPoints: 'user:select-action:spendPoints',
     checkBalance: 'user:select-action:checkBalance',
+
+  },
+  activity: {
+    selectActivity: 'activity:select-activity:',
+    selectActivityPattern: /^activity:select-activity:\d+$/,
   },
 } as const
