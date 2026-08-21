@@ -1,6 +1,9 @@
-import type { CreateActivityData, CreateRewardData } from '@/domains'
+import { activitiesTable, rewardsTable } from './'
 
-export const activitySeeds: CreateActivityData[] = [
+type Activity = typeof activitiesTable.$inferInsert
+type CreateRewardData = typeof rewardsTable.$inferInsert
+
+export const activitySeeds: Activity[] = [
   {
     title: 'Ведение Telegram-чата',
     description: 'Один месяц ведения: ответы на вопросы и публикация сообщений',

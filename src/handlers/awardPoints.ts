@@ -26,6 +26,8 @@ export const awardPoints = (
     await ctx.answerCallbackQuery({ text: ctx.t('answer-is-accepted') })
     const match = ctx.match
     if (typeof match === 'string') throw new Error('match is not an array')
+    const user = ctx.from
+    if (!user) return await ctx.reply(ctx.t('registration-user-undefined'))
 
     const [selectActivityPattern] = match
     const selectActivityPatternArr = selectActivityPattern.split(':')
