@@ -3,8 +3,9 @@ import type {
   PointTransactionsRepositoryInterface,
 } from '@/repositories/pointTransactions.repository.interface'
 import type { NewTransaction } from '@/domains'
+import type { AwardPointsServiceInterface } from './awardPoints.service.interface'
 
-export class AwardPointsService {
+export class AwardPointsService implements AwardPointsServiceInterface {
   constructor(
     private readonly transactionsRepository: PointTransactionsRepositoryInterface,
     private readonly activityRepository: ActivityRepositoryInterface,
@@ -24,16 +25,25 @@ export class AwardPointsService {
   }
 
   async createAward(userId: number, activityId: number, idempotencyKey: string) {
-    const activity = await this.getActivityById(activityId)
-    if (!activity) throw new Error('Activity not found')
     const newTransaction: NewTransaction = {
       type: 'award' as const,
-      activityId: activity.id,
-      amount: activity.points,
+      activityId: activityId,
       createdByUserId: userId,
       userId,
       idempotencyKey,
     }
-    return await this.transactionsRepository.createTransaction(newTransaction)
+    const result = await this.transactionsRepository.createTransaction(newTransaction)
+    if (!result.ok) return result
+
+    const balance = await this.transactionsRepository.getBalance(userId)
+    return {
+      ok: true as const,
+      result: {
+        transaction: result.result,
+        activityTitle: result.activityTitle,
+        balance,
+      },
+      alreadyExists: result.alreadyExists,
+    }
   }
 }

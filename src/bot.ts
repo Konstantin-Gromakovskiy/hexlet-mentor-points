@@ -9,6 +9,7 @@ import { PostgresUserRepository } from '@/repositories/user.repository.drizzle'
 import { AwardPointsService } from '@/services/awardPoints/awardPoints.service'
 import { ActivityRepository } from '@/repositories/activity.repository'
 import { requireWorkChatMember, requireRegisteredUser, requireRole } from '@/middleware'
+import { PointTransactionsRepository } from '@/repositories/pointTransactions.repository'
 
 export const createBot = () => {
   const bot = new Bot<BotContext>(config.botToken)
@@ -19,11 +20,13 @@ export const createBot = () => {
 
   bot.use(i18n.middleware())
 
+  const transactionsRepository = new PointTransactionsRepository(db)
+
   const userRepository = new PostgresUserRepository(db)
   const registrationService = new RegistrationService(userRepository)
 
   const activityRepository = new ActivityRepository(db)
-  const awardPointsService = new AwardPointsService(activityRepository)
+  const awardPointsService = new AwardPointsService(transactionsRepository, activityRepository)
 
   // middlewares
   const requireRegisteredUserMiddleware = requireRegisteredUser(userRepository)

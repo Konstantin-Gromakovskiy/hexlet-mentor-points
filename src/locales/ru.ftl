@@ -18,7 +18,43 @@ check-balance = Посмотреть баланс
 # activities
 choose-activity = Выберите активность
 
+# transactions
+award-point-success = { $amount ->
+  [one] Вам начислен { $amount } балл за "{ $activityTitle }"
+    Общий баланс: { $total }
+    Зарезервировано: { $reserved }
+    Доступно: { $available }
+  [few] Вам начислено { $amount } балла за "{ $activityTitle }"
+    Общий баланс: { $total }
+    Зарезервировано: { $reserved }
+    Доступно: { $available }
+ *[many] Вам начислено { $amount } баллов за "{ $activityTitle }"
+    Общий баланс: { $total }
+    Зарезервировано: { $reserved }
+    Доступно: { $available }
+}
+award-points-already-exists = { $amount ->
+  [one] Ранее уже был начислен { $amount } балл за "{ $activityTitle }"
+    Общий баланс: { $total }
+    Зарезервировано: { $reserved }
+    Доступно: { $available }
+  [few] Ранее уже было начислено { $amount } балла за "{ $activityTitle }"
+    Общий баланс: { $total }
+    Зарезервировано: { $reserved }
+    Доступно: { $available }
+ *[many] Ранее уже было начислено { $amount } баллов за "{ $activityTitle }"
+    Общий баланс: { $total }
+    Зарезервировано: { $reserved }
+    Доступно: { $available }
+}
+
+
+#failures
+access-denied = Доступ отклонен
+activity_archived = Активность архивирована
+activity_not_found = Активность не найдена
+invalid_award_request = Эта кнопка больше не действительна. Откройте меню начисления заново
+
 
 # other
-access-denied = Доступ отклонен
 answer-is-accepted = Ответ принят

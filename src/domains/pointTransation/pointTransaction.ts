@@ -20,7 +20,7 @@ export type AwardTransaction = TransactionBase<'award'> & {
   amount: number
 }
 
-export type NewAwardTransaction = Omit<AwardTransaction, 'id' | 'createdAt'>
+export type NewAwardTransaction = Omit<AwardTransaction, 'id' | 'createdAt' | 'amount'>
 
 export type ReserveTransaction = TransactionBase<'reserve'> & {
   activityId?: never
@@ -36,10 +36,8 @@ export type TransactionByType = {
   reserve: ReserveTransaction
 }
 export type NewTransactionByType = {
-  [K in TransactionType]: Omit<TransactionByType[K], 'id' | 'createdAt'>
+  [K in TransactionType]: Omit<TransactionByType[K], 'id' | 'createdAt' | 'amount'>
 }
-
-export type PointTransaction = TransactionByType[TransactionType]
 
 export type Balance = {
   userId: number

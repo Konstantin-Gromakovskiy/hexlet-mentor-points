@@ -1,7 +1,9 @@
-import type { PointTransactionsRepositoryInterface } from './pointTransactions.repository.interface'
+import type {
+  CreateTransactionResult, PointTransactionsRepositoryInterface,
+} from './pointTransactions.repository.interface'
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
-import type { NewTransaction, NewReserveTransaction, NewAwardTransaction, AwardTransaction } from '@/domains'
-import { pointTransactionsTable } from '@/db'
+import type { NewTransaction, NewReserveTransaction, NewAwardTransaction } from '@/domains'
+import { activitiesTable, pointTransactionsTable } from '@/db'
 import { sql, eq } from 'drizzle-orm'
 
 const mapPointTransaction = (row: typeof pointTransactionsTable.$inferSelect) => {
@@ -18,23 +20,57 @@ const mapPointTransaction = (row: typeof pointTransactionsTable.$inferSelect) =>
 export class PointTransactionsRepository implements PointTransactionsRepositoryInterface {
   constructor(private readonly db: NodePgDatabase) { }
 
-  async createTransaction(
-    transactionData: NewAwardTransaction,
-  ): Promise<AwardTransaction>
+  async createTransaction(transactionData: NewAwardTransaction): Promise<CreateTransactionResult>
+  async createTransaction(transactionData: NewReserveTransaction): Promise<never>
+  async createTransaction(transactionData: NewTransaction): Promise<CreateTransactionResult> {
+    if (transactionData.type === 'reserve') throw new Error('Reserve transactions are not implemented')
 
-  async createTransaction(
-    transactionData: NewReserveTransaction,
-  ): Promise<never>
+    const transaction = await this.db.transaction(async (tx) => {
+      const [activity] = await tx.select()
+        .from(activitiesTable)
+        .where(eq(activitiesTable.id, transactionData.activityId))
+        .for('update')
 
-  async createTransaction(
-    transactionData: NewTransaction,
-  ): Promise<AwardTransaction> {
-    if (transactionData.type === 'reserve') {
-      throw new Error('Reserve transactions are not implemented')
+      if (!activity) return { ok: false, reason: 'activity_not_found' } as const
+      if (!activity.isActive) return { ok: false, reason: 'activity_archived' } as const
+
+      const [createdTransaction] = await tx.insert(pointTransactionsTable)
+        .values({ ...transactionData, activityId: activity.id, amount: activity.points })
+        .onConflictDoNothing({ target: pointTransactionsTable.idempotencyKey })
+        .returning()
+
+      return { ok: true, result: createdTransaction, activityTitle: activity.title } as const
+    })
+
+    if (!transaction.ok) return transaction
+
+    if (transaction.result) {
+      return {
+        ok: true,
+        result: mapPointTransaction(transaction.result),
+        activityTitle: transaction.activityTitle,
+        alreadyExists: false,
+      }
     }
-    const [createdAward] = await this.db.insert(pointTransactionsTable).values(transactionData).returning()
-    if (!createdAward) throw new Error('Failed to create award')
-    return mapPointTransaction(createdAward)
+    const existingTransaction = await this.getTransactionByIdempotencyKey(transactionData.idempotencyKey)
+    if (!existingTransaction) throw new Error('Idempotency conflict, but transaction was not found')
+
+    const isSameRequest = existingTransaction.userId === transactionData.userId
+      && existingTransaction.createdByUserId === transactionData.createdByUserId
+      && existingTransaction.type === transactionData.type
+      && existingTransaction.activityId === transactionData.activityId
+
+    if (!isSameRequest) return {
+      ok: false,
+      reason: 'invalid_award_request',
+    }
+
+    return {
+      ok: true,
+      result: mapPointTransaction(existingTransaction),
+      activityTitle: transaction.activityTitle,
+      alreadyExists: true,
+    }
   }
 
   async getBalance(userId: number) {
@@ -48,5 +84,12 @@ export class PointTransactionsRepository implements PointTransactionsRepositoryI
 
     if (!balance) throw new Error('Failed to get balance')
     return { userId, ...balance }
+  }
+
+  private async getTransactionByIdempotencyKey(idempotencyKey: string) {
+    const [transaction] = await this.db.select()
+      .from(pointTransactionsTable)
+      .where(eq(pointTransactionsTable.idempotencyKey, idempotencyKey))
+    return transaction
   }
 }

@@ -3,6 +3,7 @@ export type Activity = {
   title: string
   description: string | null
   points: number
+  isActive: boolean
 }
 
 export type NewActivity = Omit<Activity, 'id'>

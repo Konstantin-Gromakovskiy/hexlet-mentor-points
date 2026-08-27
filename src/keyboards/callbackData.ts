@@ -10,6 +10,6 @@ export const callbackData = {
   },
   activity: {
     selectActivity: 'activity:select-activity:',
-    selectActivityPattern: /^activity:select-activity:\d+$/,
+    selectActivityPattern: /^(?<handlerName>activity:select-activity):(?<activityId>\d+):(?<idempotencyKey>.+$)/,
   },
 } as const

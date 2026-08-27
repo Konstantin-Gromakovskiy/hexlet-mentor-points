@@ -8,5 +8,7 @@ export const requireRegisteredUser = (users: UserRepository) => async (ctx: BotC
 
   const registeredUser = await users.findByTelegramId(String(user.id))
   if (!registeredUser) return ctx.reply(ctx.t('registration-user-not-found'))
+
+  ctx.currentUser = registeredUser
   return next()
 }
