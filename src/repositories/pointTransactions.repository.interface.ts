@@ -1,15 +1,12 @@
 import type {
-  AwardTransaction,
-  CreateAwardTransaction,
-  TransactionType,
-  ActivityId,
-  RewardRequestId,
-  Balance,
+  AwardTransaction, Balance, NewAwardTransaction, NewReserveTransaction,
 } from '@/domains'
 
 export interface PointTransactionsRepositoryInterface {
-  createTransaction(transactionData: CreateAwardTransaction):
-  Promise<AwardTransaction<TransactionType, ActivityId, RewardRequestId>>
+  createTransaction(transactionData: NewAwardTransaction):
+  Promise<AwardTransaction>
+
+  createTransaction(transactionData: NewReserveTransaction): Promise<never>
 
   getBalance(userId: number): Promise<Balance>
 }

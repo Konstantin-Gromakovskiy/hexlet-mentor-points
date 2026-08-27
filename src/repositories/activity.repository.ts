@@ -11,4 +11,9 @@ export class ActivityRepository implements ActivityRepositoryInterface {
       ? await this.db.select().from(activitiesTable).where(eq(activitiesTable.isActive, true))
       : await this.db.select().from(activitiesTable)
   }
+
+  async getActivityById(id: number): Promise<Activity | undefined> {
+    const [activity] = await this.db.select().from(activitiesTable).where(eq(activitiesTable.id, id))
+    return activity
+  }
 }
