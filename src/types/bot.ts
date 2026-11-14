@@ -3,6 +3,6 @@ import type { Bot, Context } from 'grammy'
 import type { User } from '@/domains'
 
 export type BotContext = Context & I18nFlavor & {
-  currentUser?: User
+  currentUser: User
 }
 export type AppBot = Bot<BotContext>
